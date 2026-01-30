@@ -151,7 +151,7 @@ class _LoginCardState extends State<LoginCard> {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha:0.2),
+            color: Colors.black.withValues(alpha: 0.2),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -204,7 +204,9 @@ class _LoginCardState extends State<LoginCard> {
                   borderRadius: BorderRadius.circular(14),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, '/home');
+              },
               child: const Text(
                 'ACESSAR',
                 style: TextStyle(
@@ -235,7 +237,7 @@ class _LoginCardState extends State<LoginCard> {
         hintStyle: const TextStyle(color: Colors.white70),
         prefixIcon: Icon(icon, color: Colors.white70),
         filled: true,
-        fillColor: Colors.white.withValues(alpha:0.15),
+        fillColor: Colors.white.withValues(alpha: 0.15),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: BorderSide.none,
@@ -247,7 +249,7 @@ class _LoginCardState extends State<LoginCard> {
   Widget _tipoToggle() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha:0.15),
+        color: Colors.black.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
