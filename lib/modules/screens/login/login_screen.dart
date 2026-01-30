@@ -279,7 +279,7 @@ class _LoginCardState extends State<LoginCard> {
           style: TextStyle(
             color: ativo ? Colors.black : Colors.white,
             fontWeight: FontWeight.bold,
-            fontSize: 12,
+            fontSize: 12
           ),
         ),
       ),
