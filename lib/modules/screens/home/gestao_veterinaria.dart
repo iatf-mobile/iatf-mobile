@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iatf_mobile/modules/screens/fichas/criar_ficha_screen.dart';
 import 'package:iatf_mobile/modules/screens/home/action_card.dart';
 
 class GestaoVeterinaria extends StatefulWidget {
@@ -26,11 +27,20 @@ class _QuickActionsState extends State<GestaoVeterinaria> {
           crossAxisSpacing: 16,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          children: const [
-            ActionCard(Icons.calendar_today, 'Criar Ficha'),
-            ActionCard(Icons.attach_money, 'Custos'),
-            ActionCard(Icons.event, 'Agendar'),
-            ActionCard(Icons.pets, 'Exames'),
+          children: [
+            ActionCard(
+              Icons.calendar_today,
+              'Criar Ficha',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const CriarFichaScreen()),
+                );
+              },
+            ),
+            const ActionCard(Icons.attach_money, 'Custos'),
+            const ActionCard(Icons.event, 'Agendar'),
+            const ActionCard(Icons.pets, 'Exames'),
           ],
         ),
       ],

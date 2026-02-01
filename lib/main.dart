@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:iatf_mobile/modules/screens/home/home_page.dart';
+import 'package:iatf_mobile/mainPai.dart';
 import 'package:iatf_mobile/modules/screens/login/login_screen.dart';
-import 'package:iatf_mobile/modules/shared/colors/app_thme.dart';
+import 'package:iatf_mobile/modules/shared/themes/app_theme.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       // Rotas
       routes: {
         '/login': (context) => const LoginScreen(),
-        '/home': (context) => const HomePage(),
+        '/main': (context) => const MainShell(),
       },
     );
   }
