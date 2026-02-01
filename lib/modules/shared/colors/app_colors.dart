@@ -8,4 +8,5 @@ class AppColors {
   static const Color inactive = Colors.grey;
   static const Color background = Colors.white;
   static const Color shadow = Colors.black12;
+  static const Color veterinario = Color(0xFF2E7D32);
 }

@@ -10,9 +10,30 @@ class CustomBottomBar extends StatefulWidget {
   State<CustomBottomBar> createState() => _CustomBottomBarState();
 }
 
-class _CustomBottomBarState extends State<CustomBottomBar> {
+// Adicionado 'with SingleTickerProviderStateMixin' para habilitar animações
+class _CustomBottomBarState extends State<CustomBottomBar>
+    with SingleTickerProviderStateMixin {
   // Índice do item selecionado
   int _selectedIndex = 0;
+
+  // Controlador da animação de giro
+  late AnimationController _rotationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _rotationController = AnimationController(
+      // 250ms é um tempo ideal para ver a transformação sem ser lento
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    _rotationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +95,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       behavior: HitTestBehavior.opaque,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        curve: Curves.easeOut,
+        curve: Curves.fastOutSlowIn,
         transform: Matrix4.translationValues(
           0,
           isSelected ? -6 : 0, // sobe quando selecionado
@@ -90,7 +111,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
             ),
             const SizedBox(height: 4),
             AnimatedDefaultTextStyle(
-              duration: const Duration(milliseconds: 250),
+              duration: const Duration(milliseconds: 1000),
               style: TextStyle(
                 fontSize: 12,
                 color: isSelected ? AppColors.primary : AppColors.inactive,
@@ -110,31 +131,47 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       top: 0,
       child: GestureDetector(
         onTap: () {
+          // ESSENCIAL: Alterna entre ir para o X e voltar para o +
+          if (_rotationController.isCompleted) {
+            _rotationController.reverse();
+          } else {
+            _rotationController.forward();
+          }
           debugPrint('Botão central pressionado');
         },
-        child: Container(
-          width: 56,
-          height: 56,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.shadow,
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
+
+        // RotationTransition faz o efeito de giro
+        child: RotationTransition(
+          // 0.125 turns = 45 graus. Isso transforma o + em X.
+          turns: Tween(begin: 0.0, end: 0.125).animate(
+            CurvedAnimation(
+              parent: _rotationController,
+              curve: Curves.easeInOut,
+            ),
           ),
-          child: const Icon(Icons.add, color: Colors.white, size: 32),
+          child: Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.shadow,
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: const Icon(Icons.add, color: Colors.white, size: 32),
+          ),
         ),
       ),
     );
   }
 }
 
-/*Constrói o ícone do item da bottom bar, escolhendo entre ícone padrão do Flutter 
-ou SVG dos assets, já aplicando a cor conforme o estado selecionado */
+/*Constrói o ícone do item da bottom bar... */
 Widget _buildIcon(bool isSelected, IconData? icon, String? svgAsset) {
   final Color color = isSelected ? AppColors.primary : AppColors.inactive;
 
