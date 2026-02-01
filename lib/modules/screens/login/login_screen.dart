@@ -205,7 +205,7 @@ class _LoginCardState extends State<LoginCard> {
                 ),
               ),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/home');
+                Navigator.pushReplacementNamed(context, '/main');
               },
               child: const Text(
                 'ACESSAR',

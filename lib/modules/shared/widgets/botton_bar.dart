@@ -4,7 +4,14 @@ import 'package:iatf_mobile/modules/shared/colors/app_colors.dart';
 
 // BottomBar personalizada
 class CustomBottomBar extends StatefulWidget {
-  const CustomBottomBar({super.key});
+  final int currentIndex;
+  final ValueChanged<int> onChanged;
+
+  const CustomBottomBar({
+    super.key,
+    required this.currentIndex,
+    required this.onChanged,
+  });
 
   @override
   State<CustomBottomBar> createState() => _CustomBottomBarState();
@@ -22,6 +29,10 @@ class _CustomBottomBarState extends State<CustomBottomBar>
   @override
   void initState() {
     super.initState();
+
+    // índice vem da tela
+    _selectedIndex = widget.currentIndex;
+
     _rotationController = AnimationController(
       // 250ms é um tempo ideal para ver a transformação sem ser lento
       duration: const Duration(milliseconds: 250),
@@ -88,10 +99,17 @@ class _CustomBottomBarState extends State<CustomBottomBar>
 
     return GestureDetector(
       onTap: () {
+        // evitar troca desnecessária
+        if (_selectedIndex == index) return;
+
         setState(() {
           _selectedIndex = index;
         });
+
+        // informa o pai (MainShell)
+        widget.onChanged(index);
       },
+
       behavior: HitTestBehavior.opaque,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
