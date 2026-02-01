@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iatf_mobile/modules/screens/home_page.dart';
+import 'package:iatf_mobile/modules/screens/home/home_page.dart';
 import 'package:iatf_mobile/modules/screens/login/login_screen.dart';
 import 'package:iatf_mobile/modules/shared/colors/app_thme.dart';
 
